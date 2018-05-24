@@ -14,10 +14,17 @@ namespace PE3.Dlusion
 {
     public class Startup
     {
-        IConfiguration configuration = null;
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+        //IConfiguration configuration = null;
+        //Deze regel herleid je configuratie naar null, en daardoor kan dotnet je configuratie niet vinden uiteraard. Ik voegde hierboven toe wat er tekort stond.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DlusionDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DlusionDb")));
+            services.AddDbContext<DlusionDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DlusionDb")));
             services.AddMvc();
         }
 
